@@ -144,8 +144,10 @@ else
 
 	# set permissions for /config/openvpn folder
 	echo "[info] Setting permissions recursively on /config/openvpn..."
-	chown -R "${PUID}":"${PGID}" /config/openvpn
-	chmod -R 777 /config/openvpn
+	chown -R 0:0 /config/openvpn
+	find /config/openvpn -type f -exec chmod 600 {} +
+	find /config/openvpn -type d -exec chmod 700 {} +
+	chmod 666 /config/openvpn/credentials.conf
 
 	# split comma seperated string into list from NAME_SERVERS env variable
 	IFS=',' read -ra name_server_list <<< "${NAME_SERVERS}"
